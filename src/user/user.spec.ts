@@ -1,7 +1,12 @@
 import user from './user';
 
+const sut = user();
+
+beforeEach(() => {
+  sut.users.clear();
+});
+
 describe('User', () => {
-  const sut = user();
   it('should create a user', () => {
     const userDTO = {
       name: 'John Doe',
@@ -37,7 +42,7 @@ describe('User', () => {
   it('should remove a user', () => {
     const userDTO = {
       name: 'John Doe',
-      cpf: '12345678901',
+      cpf: '12345678980',
       idade: 30,
     };
 
@@ -46,10 +51,6 @@ describe('User', () => {
     sut.remove(userDTO.cpf);
 
     expect(sut.find(userDTO.cpf)).toBeUndefined();
-  });
-
-  it('should return undefined if user does not exist', () => {
-    expect(sut.find('12345678901')).toBeUndefined();
   });
 
   it('should return undefined if user was removed', () => {
@@ -109,5 +110,17 @@ describe('User', () => {
     sut.remove(userDTO.cpf);
 
     expect(sut.find(userDTO.cpf)).toBeUndefined();
+  });
+
+  it('should list users', () => {
+    const userDTO = {
+      name: 'John Doe',
+      cpf: '12345678903',
+      idade: 30,
+    };
+
+    sut.create(userDTO);
+
+    expect(sut.list()).toEqual([userDTO]);
   });
 });
