@@ -17,7 +17,11 @@ export default function user() {
     users.delete(cpf);
   }
 
-  return { create, find, update, remove };
+  function list() {
+    return Array.from(users.values());
+  }
+
+  return { create, find, update, remove, list, users };
 }
 
 type User = {
